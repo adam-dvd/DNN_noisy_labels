@@ -204,8 +204,8 @@ def first_stage(network,test_loader,train_dataset, args, noise_or_not, filter_ma
 			optimizer1.zero_grad()
 			loss_1.backward()
 			optimizer1.step()
-		loss_l += globals_loss /ndata
-		accuracies += accuracy
+		loss_l.append(globals_loss /ndata)
+		accuracies.append(accuracy)
 		print ("epoch:%d" % epoch, "lr:%f" % lr, "train_loss:", globals_loss /ndata, "test_accuracy:%f" % accuracy)
 		if filter_mask is None:
 			torch.save(network.state_dict(), save_checkpoint)
@@ -276,9 +276,9 @@ def second_stage(network,test_loader, train_dataset, args, noise_or_not, max_epo
 		top_accuracy_rm=int(0.9 * len(loss_1_sorted))
 		top_accuracy= 1-np.sum(noise_or_not[ind_1_sorted[top_accuracy_rm:]]) / float(len(loss_1_sorted) - top_accuracy_rm)
 
-		accuracies += accuracy
-		loss_l += globals_loss / ndata
-		lr_l += lr
+		accuracies.append(accuracy)
+		loss_l.append(globals_loss / ndata)
+		lr_l.append(lr)
 		print ("epoch:%d" % epoch, "lr:%f" % lr, "train_loss:", globals_loss / ndata, "test_accuarcy:%f" % accuracy,"noise_accuracy:%f"%(1-noise_accuracy),"top 0.1 noise accuracy:%f"%top_accuracy)
 
 
