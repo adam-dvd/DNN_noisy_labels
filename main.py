@@ -69,8 +69,8 @@ args=Arguments()
 torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
 
-network_map={'resnet101':ResNet101}
-CNN=network_map[args.network]
+#network_map={'resnet101':ResNet101}
+#CNN=network_map[args.network]
 
 
 transforms_map32 = {"true": transforms.Compose([
