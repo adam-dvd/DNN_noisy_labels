@@ -46,7 +46,7 @@ class Arguments:
 			n_epoch: int = 250,
 			seed: int = 2,
 			batch_size: int = 128,
-			network: str = "coteacher",
+			network: str = 'resnet101',
 			transforms: str = 'false',
 			unstabitily_batch: int = 16
 	):
@@ -69,8 +69,8 @@ args=Arguments()
 torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
 
-#network_map={'resnet101':ResNet101}
-#CNN=network_map[args.network]
+network_map={'resnet101':ResNet101}
+CNN=network_map[args.network]
 
 
 transforms_map32 = {"true": transforms.Compose([
