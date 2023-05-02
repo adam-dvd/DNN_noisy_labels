@@ -119,11 +119,21 @@ class CIFAR4(data.Dataset):
 				entry = pickle.load(fo)
 			else:
 				entry = pickle.load(fo, encoding='latin1')
-			self.test_data = entry['data']
+			img_to_keep = []
+			targets_to_keep = []
 			if 'labels' in entry:
-				self.test_labels = entry['labels']
+				for img, target in zip(entry['data'], entry['labels']):
+						if target in [3, 5, 7, 4]:  
+							img_to_keep.append(img)
+							targets_to_keep.append(target_dict[target])
+				self.test_labels = targets_to_keep
 			else:
-				self.test_labels = entry['fine_labels']
+				for img, target in zip(entry['data'], entry['fine_labels']):
+						if target in [3, 5, 7, 4]:  
+							img_to_keep.append(img)
+							targets_to_keep.append(target_dict[target])
+				self.test_labels = targets_to_keep
+			self.test_data = img_to_keep
 			fo.close()
 			self.test_data = self.test_data.reshape((4000, 3, 32, 32))
 			self.test_data = self.test_data.transpose((0, 2, 3, 1))  # convert to HWC
