@@ -66,6 +66,12 @@ class CIFAR4(data.Dataset):
 							   ' You can use download=True to download it')
 
 		# now load the picked numpy arrays
+		target_dict = {
+			3:0,
+			5:1,
+			7:2,
+			4:3
+		} # 3 is cat, 5 is dog, 7 is horse, 4 is deer
 		if self.train:
 			self.train_data = []
 			self.train_labels = []
@@ -81,15 +87,15 @@ class CIFAR4(data.Dataset):
 				targets_to_keep = []
 				if 'labels' in entry:
 					for img, target in zip(entry['data'], entry['labels']):
-						if target in [3, 5, 7, 4]:  # 3 is cat, 5 is dog, 7 is horse, 4 is deer
+						if target in [3, 5, 7, 4]:  
 							img_to_keep.append(img)
-							targets_to_keep.append(target)
+							targets_to_keep.append(target_dict[target])
 					self.train_labels += targets_to_keep
 				else:
 					for img, target in zip(entry['data'], entry['fine_labels']):
-						if target in [3, 5, 7, 4]:  # 3 is cat, 5 is dog, 7 is horse, 4 is deer
+						if target in [3, 5, 7, 4]:  
 							img_to_keep.append(img)
-							targets_to_keep.append(target)
+							targets_to_keep.append(target_dict[target])
 					self.train_labels += targets_to_keep
 				self.train_data.append(img_to_keep)
 				fo.close()
