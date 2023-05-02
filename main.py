@@ -194,7 +194,7 @@ def first_stage(network,test_loader,train_dataset, args, noise_or_not, filter_ma
 			loss_1 = criterion(logits, labels)
 
 			for pi, cl in zip(indexes, loss_1):
-				example_loss[pi] = cl.data.item() # removed ".cpu()" inbetween cl and .data
+				example_loss[pi] = cl.cpu().data.item()
 
 			globals_loss += loss_1.sum().cpu().data.item()
 			loss_1 = loss_1.mean()
