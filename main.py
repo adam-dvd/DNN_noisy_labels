@@ -70,13 +70,12 @@ args=Arguments()
 torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
 
-"""
 network_map={
 	'resnet101':ResNet101, 
 	'resnet18':ResNet18
 }
 CNN=network_map[args.network]
-"""
+
 
 transforms_map32 = {"true": transforms.Compose([
 	transforms.RandomCrop(32, padding=4),
