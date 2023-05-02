@@ -14,6 +14,7 @@ import numpy as np
 from data.mask_data import Mask_Select
 
 from resnet import ResNet101, ResNet18
+from cnn import CNN
 
 """
 parser = argparse.ArgumentParser()
