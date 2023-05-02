@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
 import torchvision.transforms as transforms
-from data.cifar import CIFAR10, CIFAR100
+from data.cifar import CIFAR4
 
 import argparse, sys
 import numpy as np
