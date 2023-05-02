@@ -126,14 +126,14 @@ class CIFAR4(data.Dataset):
 						if target in [3, 5, 7, 4]:  
 							img_to_keep.append(img)
 							targets_to_keep.append(target_dict[target])
-				self.test_labels = targets_to_keep
+				self.test_labels = np.array(targets_to_keep)
 			else:
 				for img, target in zip(entry['data'], entry['fine_labels']):
 						if target in [3, 5, 7, 4]:  
 							img_to_keep.append(img)
 							targets_to_keep.append(target_dict[target])
-				self.test_labels = targets_to_keep
-			self.test_data = img_to_keep
+				self.test_labels = np.array(targets_to_keep)
+			self.test_data = np.array(img_to_keep)
 			fo.close()
 			self.test_data = self.test_data.reshape((4000, 3, 32, 32))
 			self.test_data = self.test_data.transpose((0, 2, 3, 1))  # convert to HWC
