@@ -207,10 +207,10 @@ def first_stage(network,test_loader,train_dataset, args, noise_or_not, filter_ma
 			torch.save(network.state_dict(), save_checkpoint)
 
 
-def second_stage(network,test_loader,max_epoch=250):
+def second_stage(network,test_loader, train_dataset, args, noise_or_not, max_epoch=250):
 	train_loader_detection = torch.utils.data.DataLoader(dataset=train_dataset,
 											   batch_size=16,
-											   num_workers=32,
+											   num_workers=2,
 											   shuffle=True)
 	optimizer1 = torch.optim.SGD(network.parameters(), lr=0.01, momentum=0.9, weight_decay=5e-4)
 	criterion=torch.nn.CrossEntropyLoss(reduce=False, ignore_index=-1).cuda()
@@ -254,6 +254,10 @@ def second_stage(network,test_loader,max_epoch=250):
 		ind_1_sorted = np.argsort(moving_loss_dic)
 		loss_1_sorted = moving_loss_dic[ind_1_sorted]
 
+		if args.forget_rate is None:
+			forget_rate=args.noise_rate
+		else:
+			forget_rate=args.forget_rate
 		remember_rate = 1 - forget_rate
 		num_remember = int(remember_rate * len(loss_1_sorted))
 
