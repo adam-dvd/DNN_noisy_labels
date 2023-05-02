@@ -69,12 +69,13 @@ args=Arguments()
 torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
 
+"""
 network_map={
 	'resnet101':ResNet101, 
 	'resnet18':ResNet18
 }
 CNN=network_map[args.network]
-
+"""
 
 transforms_map32 = {"true": transforms.Compose([
 	transforms.RandomCrop(32, padding=4),
@@ -266,7 +267,7 @@ def second_stage(network,test_loader,max_epoch=250):
 
 	return mask
 
-
+"""
 basenet= CNN(input_channel=input_channel, n_outputs=num_classes).cuda()
 test_loader = torch.utils.data.DataLoader(
 	dataset=test_dataset,batch_size=128,
@@ -274,3 +275,4 @@ test_loader = torch.utils.data.DataLoader(
 first_stage(network=basenet,test_loader=test_loader)
 filter_mask=second_stage(network=basenet,test_loader=test_loader)
 first_stage(network=basenet,test_loader=test_loader,filter_mask=filter_mask)
+"""
