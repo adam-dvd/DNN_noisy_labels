@@ -147,7 +147,7 @@ def evaluate(test_loader, model1):
 	model1.eval()
 	correct1 = 0
 	total1 = 0
-	for images, labels in test_loader:
+	for images, labels, _ in test_loader:
 		images = Variable(images).cuda()
 		#print images.shape
 		logits1 = model1(images)
