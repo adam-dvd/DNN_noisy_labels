@@ -14,6 +14,8 @@ import numpy as np
 from data.mask_data import Mask_Select
 
 from resnet import ResNet101
+
+"""
 parser = argparse.ArgumentParser()
 parser.add_argument('--result_dir', type = str, help = 'dir to save result txt files', default = '../results/')
 parser.add_argument('--noise_rate', type = float, help = 'corruption rate, should be less than 1', default = 0.2)
@@ -29,9 +31,40 @@ parser.add_argument('--network', type=str, default="coteacher")
 parser.add_argument('--transforms', type=str, default="false")
 
 parser.add_argument('--unstabitily_batch', type=int, default=16)
-args, unknown = parser.parse_known_args()					# added
 args = parser.parse_args()
 print (args)
+"""
+
+class Arguments:
+	def __init__(
+			self, 
+			result_dir: str = '~/', 
+			noise_rate: float = 0.2, 
+			forget_rate: float = None, 
+			noise_type: str = 'symmetric',
+			dataset: str = 'cifar10',
+			n_epoch: int = 250,
+			seed: int = 2,
+			batch_size: int = 128,
+			network: str = "coteacher",
+			transforms: str = 'false',
+			unstabitily_batch: int = 16
+	):
+		self.result_dir = result_dir
+		self.noise_rate = noise_rate
+		self.forget_rate = forget_rate
+		self.noise_type = noise_type
+		self.dataset = dataset
+		self.n_epoch = n_epoch
+		self.seed = seed
+		self.batch_size = batch_size
+		self.network = network
+		self.transforms = transforms
+		self.unstabitily_batch = unstabitily_batch
+
+args=Arguments()
+
+
 # Seed
 torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
