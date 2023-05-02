@@ -29,6 +29,7 @@ parser.add_argument('--network', type=str, default="coteacher")
 parser.add_argument('--transforms', type=str, default="false")
 
 parser.add_argument('--unstabitily_batch', type=int, default=16)
+args, unknown = parser.parse_known_args()					# added
 args = parser.parse_args()
 print (args)
 # Seed
