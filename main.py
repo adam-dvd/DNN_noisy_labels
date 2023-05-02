@@ -13,7 +13,7 @@ import argparse, sys
 import numpy as np
 from data.mask_data import Mask_Select
 
-from resnet import ResNet101
+from resnet import ResNet101, ResNet18
 
 """
 parser = argparse.ArgumentParser()
@@ -69,7 +69,10 @@ args=Arguments()
 torch.manual_seed(args.seed)
 torch.cuda.manual_seed(args.seed)
 
-network_map={'resnet101':ResNet101}
+network_map={
+	'resnet101':ResNet101, 
+	'resnet18':ResNet18
+}
 CNN=network_map[args.network]
 
 
