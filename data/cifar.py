@@ -95,7 +95,7 @@ class CIFAR4(data.Dataset):
 				fo.close()
 
 			self.train_data = np.concatenate(self.train_data)
-			self.train_data = self.train_data.reshape((50000, 3, 32, 32))
+			self.train_data = self.train_data.reshape((20000, 3, 32, 32))
 			self.train_data = self.train_data.transpose((0, 2, 3, 1))  # convert to HWC
 			#if noise_type is not None:
 			if noise_type !='clean':
@@ -119,7 +119,7 @@ class CIFAR4(data.Dataset):
 			else:
 				self.test_labels = entry['fine_labels']
 			fo.close()
-			self.test_data = self.test_data.reshape((10000, 3, 32, 32))
+			self.test_data = self.test_data.reshape((4000, 3, 32, 32))
 			self.test_data = self.test_data.transpose((0, 2, 3, 1))  # convert to HWC
 
 	def __getitem__(self, index):
