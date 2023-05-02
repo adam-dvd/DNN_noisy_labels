@@ -62,7 +62,7 @@ class Arguments:
 		self.network = network
 		self.transforms = transforms
 		self.unstabitily_batch = unstabitily_batch
-
+"""
 args=Arguments()
 
 
@@ -131,6 +131,8 @@ else:
 	forget_rate=args.forget_rate
 
 noise_or_not = train_dataset.noise_or_not
+"""
+
 def adjust_learning_rate(optimizer, epoch,max_epoch=200):
 	if epoch < 0.25 * max_epoch:
 		lr = 0.01
@@ -141,6 +143,7 @@ def adjust_learning_rate(optimizer, epoch,max_epoch=200):
 	for param_group in optimizer.param_groups:
 		param_group['lr'] = lr
 	return lr
+
 def evaluate(test_loader, model1):
 	model1.eval()
 	correct1 = 0
@@ -158,7 +161,7 @@ def evaluate(test_loader, model1):
 
 	return acc1
 
-def first_stage(network,test_loader,filter_mask=None):
+def first_stage(network,test_loader,train_dataset, args, noise_or_not, filter_mask=None):
 	if filter_mask is not None:#third stage
 		train_loader_init = torch.utils.data.DataLoader(dataset=Mask_Select(train_dataset,filter_mask),
 													batch_size=128,
@@ -167,7 +170,7 @@ def first_stage(network,test_loader,filter_mask=None):
 	else:
 		train_loader_init = torch.utils.data.DataLoader(dataset=train_dataset,
 														batch_size=128,
-														num_workers=32,
+														num_workers=2,
 														shuffle=True, pin_memory=True)
 	save_checkpoint=args.network+'_'+args.dataset+'_'+args.noise_type+str(args.noise_rate)+'.pt'
 	if  filter_mask is not None:
