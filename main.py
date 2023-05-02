@@ -164,7 +164,7 @@ def first_stage(network,test_loader,train_dataset, args, noise_or_not, filter_ma
 	if filter_mask is not None:#third stage
 		train_loader_init = torch.utils.data.DataLoader(dataset=Mask_Select(train_dataset,filter_mask),
 													batch_size=128,
-													num_workers=32,
+													num_workers=2,
 													shuffle=True,pin_memory=True)
 	else:
 		train_loader_init = torch.utils.data.DataLoader(dataset=train_dataset,
