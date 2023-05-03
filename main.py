@@ -190,7 +190,7 @@ def first_stage(network,test_loader,train_dataset, args, noise_or_not, active_pa
 		network.train()
 		with torch.no_grad():
 			accuracy = evaluate(test_loader, network)
-		example_loss = np.zeros_like(noise_or_not, dtype=float)
+		#example_loss = np.zeros_like(noise_or_not, dtype=float)
 		lr=adjust_learning_rate(optimizer1,epoch,args.n_epoch)
 		for i, (images, labels, indexes) in enumerate(train_loader_init):
 			images = Variable(images).cuda()
@@ -199,8 +199,8 @@ def first_stage(network,test_loader,train_dataset, args, noise_or_not, active_pa
 			logits = network(images)
 			loss_1 = criterion(logits, labels)
 
-			for pi, cl in zip(indexes, loss_1):
-				example_loss[pi] = cl.cpu().data.item()
+			#for pi, cl in zip(indexes, loss_1):
+			#	example_loss[pi] = cl.cpu().data.item()
 
 			globals_loss += loss_1.sum().cpu().data.item()
 			loss_1 = loss_1.mean()
