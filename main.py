@@ -48,7 +48,7 @@ class Arguments:
 			n_epoch: int = 250,
 			seed: int = 2,
 			batch_size: int = 128,
-			network: str = 'resnet101',
+			network: str = 'my_cnn',
 			transforms: str = 'false',
 			unstabitily_batch: int = 16
 	):
