@@ -203,6 +203,7 @@ def first_stage(network,test_loader,train_dataset, args, noise_or_not, active_pa
 			#	example_loss[pi] = cl.cpu().data.item()
 
 			globals_loss += loss_1.sum().cpu().data.item()
+			print(loss_1.shape)
 			loss_1 = loss_1.mean()
 
 			optimizer1.zero_grad()
