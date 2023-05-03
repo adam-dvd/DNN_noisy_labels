@@ -262,6 +262,7 @@ def second_stage(network,test_loader, train_dataset, args, noise_or_not, max_epo
 			optimizer1.zero_grad()
 			loss_1.backward()
 			optimizer1.step()
+		loss_by_sample = example_loss
 		example_loss=example_loss - example_loss.mean()
 		moving_loss_dic=moving_loss_dic+example_loss
 
@@ -284,7 +285,7 @@ def second_stage(network,test_loader, train_dataset, args, noise_or_not, max_epo
 
 		noise_accuracies.append(noise_accuracy)
 		mask_l.append(mask)
-		loss_1_sorted_l.append(example_loss[ind_1_sorted])
+		loss_1_sorted_l.append(loss_by_sample[ind_1_sorted])
 		lr_l.append(lr)
 		print ("epoch:%d" % epoch, "lr:%f" % lr, "train_loss:", globals_loss / ndata, "test_accuarcy:%f" % accuracy,"noise_accuracy:%f"%(1-noise_accuracy),"top 0.1 noise accuracy:%f"%top_accuracy)
 
