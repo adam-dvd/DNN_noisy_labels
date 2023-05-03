@@ -15,6 +15,7 @@ from data.mask_data import Mask_Select
 
 from resnet import ResNet101, ResNet18
 from cnn import CNN
+from active_passive_loss import NCEandRCE
 
 """
 parser = argparse.ArgumentParser()
@@ -160,7 +161,7 @@ def evaluate(test_loader, model1):
 
 	return acc1
 
-def first_stage(network,test_loader,train_dataset, args, noise_or_not, filter_mask=None):
+def first_stage(network,test_loader,train_dataset, args, noise_or_not, active_passive_loss=False, filter_mask=None):
 	if filter_mask is not None:#third stage
 		train_loader_init = torch.utils.data.DataLoader(dataset=Mask_Select(train_dataset,filter_mask),
 													batch_size=128,
@@ -177,7 +178,10 @@ def first_stage(network,test_loader,train_dataset, args, noise_or_not, filter_ma
 		network.load_state_dict(torch.load(save_checkpoint))
 	ndata=train_dataset.__len__()
 	optimizer1 = torch.optim.SGD(network.parameters(), lr=0.01, momentum=0.9, weight_decay=5e-4)
-	criterion = torch.nn.CrossEntropyLoss(reduce=False, ignore_index=-1).cuda()
+	if active_passive_loss:
+		criterion = NCEandRCE(alpha=1,beta=1,num_classes=4).cuda()
+	else:
+		criterion = torch.nn.CrossEntropyLoss(reduce=False, ignore_index=-1).cuda()
 	accuracies = []
 	loss_l = []
 	for epoch in range(1, args.n_epoch):
