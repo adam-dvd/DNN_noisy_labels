@@ -1,7 +1,16 @@
+"""Script adapted from
+Code for NeurIPS'18 Paper ["Co-teaching: Robust Training of Deep Neural Networks with Extremely Noisy Labels"](https://arxiv.org/abs/1804.06872)
+@inproceedings{han2018coteaching,
+  title={Co-teaching: Robust training of deep neural networks with extremely noisy labels},
+  author={Han, Bo and Yao, Quanming and Yu, Xingrui and Niu, Gang and Xu, Miao and Hu, Weihua and Tsang, Ivor and Sugiyama, Masashi},
+  booktitle={NeurIPS},
+  pages={8535--8545},
+  year={2018}
+}
+"""
+
 import torch.nn as nn
-import torch.nn.init as init 
 import torch.nn.functional as F
-import torch.optim as optim
 
 def call_bn(bn, x):
     return bn(x)
