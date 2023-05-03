@@ -1,3 +1,14 @@
+"""Script extracted from
+Code for ICML2020 Paper ["Normalized Loss Functions for Deep Learning with Noisy Labels"](https://arxiv.org/abs/2006.13554)
+@inproceedings{ma2020normalized,
+  title={Normalized Loss Functions for Deep Learning with Noisy Labels},
+  author={Ma, Xingjun and Huang, Hanxun and Wang, Yisen and Romano, Simone and Erfani, Sarah and Bailey, James},
+  booktitle={ICML},
+  year={2020}
+}
+"""
+
+
 import torch
 import torch.nn.functional as F
 import numpy as np

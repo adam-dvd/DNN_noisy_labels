@@ -1,9 +1,19 @@
+"""Script adapted from
+Code for ICCV2019 Paper ["O2U-Net: A Simple Noisy Label Detection Approach for Deep Neural Networks"](https://ieeexplore.ieee.org/document/9008796)
+@INPROCEEDINGS{huang2019o2unet,
+  author={Huang, Jinchi and Qu, Lie and Jia, Rongfei and Zhao, Binqiang},
+  booktitle={2019 IEEE/CVF International Conference on Computer Vision (ICCV)}, 
+  title={O2U-Net: A Simple Noisy Label Detection Approach for Deep Neural Networks}, 
+  year={2019},
+  pages={3325-3333},
+  doi={10.1109/ICCV.2019.00342},
+  }
+"""
+
 import os
 import torch 
-import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
-import torchvision.transforms as transforms
 
 import numpy as np
 from data.mask_data import Mask_Select
@@ -19,7 +29,7 @@ class Arguments:
 			noise_rate: float = 0.2, 
 			forget_rate: float = None,
 			dataset: str = 'cifar10',
-			n_epoch: int = 250,
+			n_epoch: int = 100,
 			seed: int = 2,
 			batch_size: int = 128,
 			network: str = 'my_cnn',

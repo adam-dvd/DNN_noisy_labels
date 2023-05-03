@@ -1,3 +1,16 @@
+"""Script extracted from
+Code for ICCV2019 Paper ["O2U-Net: A Simple Noisy Label Detection Approach for Deep Neural Networks"](https://ieeexplore.ieee.org/document/9008796)
+@INPROCEEDINGS{huang2019o2unet,
+  author={Huang, Jinchi and Qu, Lie and Jia, Rongfei and Zhao, Binqiang},
+  booktitle={2019 IEEE/CVF International Conference on Computer Vision (ICCV)}, 
+  title={O2U-Net: A Simple Noisy Label Detection Approach for Deep Neural Networks}, 
+  year={2019},
+  pages={3325-3333},
+  doi={10.1109/ICCV.2019.00342},
+  }
+"""
+
+
 from  torch.utils import data
 from  PIL import  Image
 from  io import BytesIO
