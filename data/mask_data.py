@@ -13,7 +13,6 @@ Code for ICCV2019 Paper ["O2U-Net: A Simple Noisy Label Detection Approach for D
 
 from  torch.utils import data
 from  PIL import  Image
-from  io import BytesIO
 class Mask_Select(data.Dataset):
     def __init__(self, origin_dataset,mask_index):
         self.transform = origin_dataset.transform
