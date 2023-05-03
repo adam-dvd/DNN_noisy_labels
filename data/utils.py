@@ -1,6 +1,5 @@
 import os
 import os.path
-import copy
 import hashlib
 import errno
 import numpy as np
