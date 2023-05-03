@@ -55,6 +55,7 @@ class CIFAR4(data.Dataset):
 		self.train = train  # training set or test set
 		self.dataset='cifar4'
 		self.nb_classes=4
+		self.noise_rate=noise_rate
 
 		if download:
 			self.download()
@@ -102,10 +103,10 @@ class CIFAR4(data.Dataset):
 			self.train_data = self.train_data.reshape((20000, 3, 32, 32))
 			self.train_data = self.train_data.transpose((0, 2, 3, 1))  # convert to HWC
 			
-			if noise_rate > 0:
+			if self.noise_rate > 0:
 				# noisify train data
 				self.train_labels=np.asarray([[self.train_labels[i]] for i in range(len(self.train_labels))])
-				self.train_noisy_labels, self.actual_noise_rate = noisify(dataset=self.dataset, train_labels=self.train_labels, noise_rate=noise_rate, random_state=random_state, nb_classes=self.nb_classes)
+				self.train_noisy_labels, self.actual_noise_rate = noisify(dataset=self.dataset, train_labels=self.train_labels, noise_rate=self.noise_rate, random_state=random_state, nb_classes=self.nb_classes)
 				self.train_noisy_labels=[i[0] for i in self.train_noisy_labels]
 				_train_labels=[i[0] for i in self.train_labels]
 				self.noise_or_not = np.transpose(self.train_noisy_labels)==np.transpose(_train_labels)
