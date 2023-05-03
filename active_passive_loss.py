@@ -11,7 +11,6 @@ Code for ICML2020 Paper ["Normalized Loss Functions for Deep Learning with Noisy
 
 import torch
 import torch.nn.functional as F
-import numpy as np
 
 class ReverseCrossEntropy(torch.nn.Module):
     def __init__(self, num_classes, scale=1.0):
