@@ -1,21 +1,16 @@
-# -*- coding:utf-8 -*-
-
-#sudo python main.py --n_epoch=250 --method=ours-base  --dataset=cifar100 --batch_size=128
 import os
 import torch 
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
 import torchvision.transforms as transforms
-from data.cifar import CIFAR4
 
-import argparse, sys
 import numpy as np
 from data.mask_data import Mask_Select
 
-from resnet import ResNet101, ResNet18
 from cnn import CNN
 from active_passive_loss import NCEandRCE
+from data.cifar import CIFAR4
 
 class Arguments:
 	def __init__(
@@ -200,13 +195,3 @@ def second_stage(network,test_loader, train_dataset, args, noise_or_not, max_epo
 
 
 	return mask, lr_l, mask_l, noise_accuracies, loss_1_sorted_l
-
-"""
-basenet= CNN(input_channel=input_channel, n_outputs=num_classes).cuda()
-test_loader = torch.utils.data.DataLoader(
-	dataset=test_dataset,batch_size=128,
-	num_workers=32,shuffle=False, pin_memory=True)
-first_stage(network=basenet,test_loader=test_loader)
-filter_mask=second_stage(network=basenet,test_loader=test_loader)
-first_stage(network=basenet,test_loader=test_loader,filter_mask=filter_mask)
-"""
