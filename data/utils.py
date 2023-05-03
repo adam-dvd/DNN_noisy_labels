@@ -99,7 +99,6 @@ def multiclass_noisify(y, P, random_state=0):
     """ Flip classes according to transition probability matrix T.
     It expects a number between 0 and the number of classes - 1.
     """
-    print(np.max(y), P.shape[0])
     assert P.shape[0] == P.shape[1]
     assert np.max(y) < P.shape[0]
 
@@ -108,7 +107,6 @@ def multiclass_noisify(y, P, random_state=0):
     assert (P >= 0.0).all()
 
     m = y.shape[0]
-    print(m)
     new_y = y.copy()
     flipper = np.random.RandomState(random_state)
 
