@@ -17,33 +17,12 @@ from resnet import ResNet101, ResNet18
 from cnn import CNN
 from active_passive_loss import NCEandRCE
 
-"""
-parser = argparse.ArgumentParser()
-parser.add_argument('--result_dir', type = str, help = 'dir to save result txt files', default = '../results/')
-parser.add_argument('--noise_rate', type = float, help = 'corruption rate, should be less than 1', default = 0.2)
-parser.add_argument('--forget_rate', type = float, help = 'forget rate', default = None)
-parser.add_argument('--noise_type', type = str, help='[pairflip, symmetric]', default='symmetric')
-
-parser.add_argument('--dataset', type = str, help = 'mnist,minimagenet, cifar10, or cifar100', default = 'cifar100')
-parser.add_argument('--n_epoch', type=int, default=250)
-parser.add_argument('--seed', type=int, default=2)
-
-parser.add_argument('--batch_size', type=int, default=128)
-parser.add_argument('--network', type=str, default="coteacher")
-parser.add_argument('--transforms', type=str, default="false")
-
-parser.add_argument('--unstabitily_batch', type=int, default=16)
-args = parser.parse_args()
-print (args)
-"""
-
 class Arguments:
 	def __init__(
 			self, 
 			result_dir: str = '~/', 
 			noise_rate: float = 0.2, 
-			forget_rate: float = None, 
-			noise_type: str = 'symmetric',
+			forget_rate: float = None,
 			dataset: str = 'cifar10',
 			n_epoch: int = 250,
 			seed: int = 2,
@@ -55,7 +34,6 @@ class Arguments:
 		self.result_dir = result_dir
 		self.noise_rate = noise_rate
 		self.forget_rate = forget_rate
-		self.noise_type = noise_type
 		self.dataset = dataset
 		self.n_epoch = n_epoch
 		self.seed = seed
@@ -63,75 +41,6 @@ class Arguments:
 		self.network = network
 		self.transforms = transforms
 		self.unstabitily_batch = unstabitily_batch
-"""
-args=Arguments()
-
-
-# Seed
-torch.manual_seed(args.seed)
-torch.cuda.manual_seed(args.seed)
-
-network_map={
-	'resnet101':ResNet101, 
-	'resnet18':ResNet18
-}
-CNN=network_map[args.network]
-
-
-transforms_map32 = {"true": transforms.Compose([
-	transforms.RandomCrop(32, padding=4),
-	transforms.RandomHorizontalFlip(),
-	transforms.ToTensor()]), 'false': transforms.Compose([transforms.ToTensor()])}
-transformer = transforms_map32[args.transforms]
-
-if args.dataset=='cifar10':
-	input_channel=3
-	num_classes=10
-	args.top_bn = False
-	args.epoch_decay_start = 80
-	train_dataset = CIFAR10(root=args.result_dir,
-								download=True,
-								train=True,
-								transform=transformer,
-								noise_type=args.noise_type,
-				noise_rate=args.noise_rate
-					)
-
-	test_dataset = CIFAR10(root=args.result_dir,
-								download=True,
-								train=False,
-								transform=transforms.ToTensor(),
-								noise_type=args.noise_type,
-					noise_rate=args.noise_rate
-					)
-
-if args.dataset=='cifar100':
-	input_channel=3
-	num_classes=100
-	args.top_bn = False
-	args.epoch_decay_start = 100
-	train_dataset = CIFAR100(root=args.result_dir,
-								download=True,
-								train=True,
-								transform=transformer,
-								noise_type=args.noise_type,
-				noise_rate=args.noise_rate
-					)
-
-	test_dataset = CIFAR100(root=args.result_dir,
-								download=True,
-								train=False,
-								transform=transforms.ToTensor(),
-								noise_type=args.noise_type,
-				noise_rate=args.noise_rate
-					)
-if args.forget_rate is None:
-	forget_rate=args.noise_rate
-else:
-	forget_rate=args.forget_rate
-
-noise_or_not = train_dataset.noise_or_not
-"""
 
 def adjust_learning_rate(optimizer, epoch,max_epoch=200):
 	if epoch < 0.25 * max_epoch:
@@ -172,7 +81,7 @@ def first_stage(network,test_loader,train_dataset, args, noise_or_not, active_pa
 														batch_size=128,
 														num_workers=2,
 														shuffle=True, pin_memory=True)
-	save_checkpoint=args.network+'_'+args.dataset+'_'+args.noise_type+str(args.noise_rate)+'.pt'
+	save_checkpoint=args.network+'_'+args.dataset+'_'+str(args.noise_rate)+'.pt'
 	if  filter_mask is not None and os.path.isfile(save_checkpoint):
 		print ("restore model from %s.pt"%save_checkpoint)
 		network.load_state_dict(torch.load(save_checkpoint))
