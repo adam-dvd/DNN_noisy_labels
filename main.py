@@ -222,8 +222,8 @@ def second_stage(network,test_loader, train_dataset, args, noise_or_not, max_epo
 	moving_loss_dic=np.zeros_like(noise_or_not)
 	ndata = train_dataset.__len__()
 
-	accuracies = []
-	loss_l = []
+	noise_accuracies = []
+	mask_l = []
 	lr_l = []
 	loss_1_sorted_l = []
 	for epoch in range(1, max_epoch):
@@ -277,15 +277,15 @@ def second_stage(network,test_loader, train_dataset, args, noise_or_not, max_epo
 		top_accuracy_rm=int(0.9 * len(loss_1_sorted))
 		top_accuracy= 1-np.sum(noise_or_not[ind_1_sorted[top_accuracy_rm:]]) / float(len(loss_1_sorted) - top_accuracy_rm)
 
-		accuracies.append(accuracy)
-		loss_l.append(globals_loss / ndata)
+		noise_accuracies.append(noise_accuracy)
+		mask_l.append(mask)
 		loss_1_sorted_l.append(loss_1_sorted)
 		lr_l.append(lr)
 		print ("epoch:%d" % epoch, "lr:%f" % lr, "train_loss:", globals_loss / ndata, "test_accuarcy:%f" % accuracy,"noise_accuracy:%f"%(1-noise_accuracy),"top 0.1 noise accuracy:%f"%top_accuracy)
 
 
 
-	return mask, lr_l, loss_l, accuracies, loss_1_sorted_l
+	return mask, lr_l, mask_l, noise_accuracies, loss_1_sorted_l
 
 """
 basenet= CNN(input_channel=input_channel, n_outputs=num_classes).cuda()
