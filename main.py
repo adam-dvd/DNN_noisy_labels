@@ -173,7 +173,7 @@ def first_stage(network,test_loader,train_dataset, args, noise_or_not, active_pa
 														num_workers=2,
 														shuffle=True, pin_memory=True)
 	save_checkpoint=args.network+'_'+args.dataset+'_'+args.noise_type+str(args.noise_rate)+'.pt'
-	if  filter_mask is not None:
+	if  filter_mask is not None and os.path.isfile(save_checkpoint):
 		print ("restore model from %s.pt"%save_checkpoint)
 		network.load_state_dict(torch.load(save_checkpoint))
 	ndata=train_dataset.__len__()
