@@ -225,6 +225,7 @@ def second_stage(network,test_loader, train_dataset, args, noise_or_not, max_epo
 	accuracies = []
 	loss_l = []
 	lr_l = []
+	loss_1_sorted_l = []
 	for epoch in range(1, max_epoch):
 		# train models
 		globals_loss=0
@@ -278,12 +279,13 @@ def second_stage(network,test_loader, train_dataset, args, noise_or_not, max_epo
 
 		accuracies.append(accuracy)
 		loss_l.append(globals_loss / ndata)
+		loss_1_sorted_l.append(loss_1_sorted)
 		lr_l.append(lr)
 		print ("epoch:%d" % epoch, "lr:%f" % lr, "train_loss:", globals_loss / ndata, "test_accuarcy:%f" % accuracy,"noise_accuracy:%f"%(1-noise_accuracy),"top 0.1 noise accuracy:%f"%top_accuracy)
 
 
 
-	return mask, lr_l, loss_l, accuracies
+	return mask, lr_l, loss_l, accuracies, loss_1_sorted_l
 
 """
 basenet= CNN(input_channel=input_channel, n_outputs=num_classes).cuda()
